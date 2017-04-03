@@ -299,6 +299,15 @@ def ImportICS(batch, service, gcalendar, verbose=False, dump=False, reminder=Non
             if dump:
                 continue
 
+            event['reminders'] = {
+                                     'useDefault': False,
+                                     'overrides': [
+                                         {'method': 'email', 'minutes': 10},
+                                         {'method': 'popup', 'minutes': 10},
+                                         {'method': 'sms', 'minutes': 10},
+                                     ],
+                                 },
+
             if not verbose:
                 batch.add(service.events().insert(calendarId=gcalendar["id"], body=event))
                 # newEvent = _RetryWithBackoff(batch)
